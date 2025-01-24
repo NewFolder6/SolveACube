@@ -58,16 +58,7 @@ function RotateLayer(cube, direction, layer, clockwise){
     GetLayerPieces(cube, direction, layer).forEach(piece => {
         switch (direction){
             case Direction.UP:
-                if (piece.X > 0 && piece.Z > 0){
-                    if (clockwise){
-                        cube.pieces[piece.Index].X = -piece.X;
-                        // TODO color 
-
-
-                    } else {
-                        // rotate left
-                    }
-                }
+                // TODO
         }
     });
 }
