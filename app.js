@@ -53,11 +53,26 @@ function ScrambleCube(steps){
     }
 }
 
-function RotateLayer(direction, clockwise){
+function RotateLayer(cube, direction, layer, clockwise){
     // TODO
+    GetLayerPieces(cube, direction, layer).forEach(piece => {
+        switch (direction){
+            case Direction.UP:
+                if (piece.X > 0 && piece.Z > 0){
+                    if (clockwise){
+                        cube.pieces[piece.Index].X = -piece.X;
+                        // TODO color 
+
+
+                    } else {
+                        // rotate left
+                    }
+                }
+        }
+    });
 }
 
-function InitializePiece(cubeSize, x, y, z){
+function InitializePiece(index, cubeSize, x, y, z){
     var faces = 0;
 
     // green side is front 
@@ -77,6 +92,7 @@ function InitializePiece(cubeSize, x, y, z){
     var type = (faces === 1 ? PieceType.CENTER : (faces === 2 ? PieceType.EDGE : PieceType.CORNER));
     const offset = Math.floor(cubeSize / 2);
     return {
+        Index: index,
         X: x - offset,
         Y: y - offset,
         Z: z - offset,
@@ -105,7 +121,7 @@ function GetLayerPieces(cube, direction, layer){
             return cube.pieces.filter(piece => piece.X === -offset + layer);
         case Direction.RIGHT:
             return cube.pieces.filter(piece => piece.X === offset - layer);
-        case Direction.FORWARD:
+        case Direction.FRONT:
             return cube.pieces.filter(piece => piece.Z === -offset + layer);
         case Direction.BACKWARD:
             return cube.pieces.filter(piece => piece.Z === offset - layer);
@@ -119,7 +135,7 @@ function Cube(cubeSize){
     for (let x = 0; x < cubeSize; x++){
         for (let y = 0; y < cubeSize; y++){
             for (let z = 0; z < cubeSize; z++){
-                let piece = InitializePiece(cubeSize, x, y, z);
+                let piece = InitializePiece(i, cubeSize, x, y, z);
                 if (!piece) continue;
                 this.pieces.push(piece);
                 i++;
@@ -129,4 +145,8 @@ function Cube(cubeSize){
 }
 
 var MyRubiksCube = new Cube(Size);
-console.log(GetLayerPieces(MyRubiksCube, Direction.UP, 1));
+
+RotateLayer(MyRubiksCube, Direction.UP, 1, true);
+var layer = [];
+layer = GetLayerPieces(MyRubiksCube, Direction.UP, 1);
+console.log(layer);
