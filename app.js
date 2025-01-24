@@ -29,28 +29,32 @@ const Size = 3;
 
 function ScrambleCube(steps){
     for (let i = 0; i < steps; i++){
-        const clockwise = Math.random() >= 0.5;
-    switch (Math.floor(Math.random() * 6)){
-        case 0:
-            RotateLayer(Direction.UP, clockwise);
-            break;
-        case 1:
-            RotateLayer(Direction.DOWN, clockwise);
-            break;
-        case 2:
-            RotateLayer(Direction.LEFT, clockwise);
-            break;
-        case 3:
-            RotateLayer(Direction.RIGHT, clockwise);
-            break;
-        case 4:
-            RotateLayer(Direction.FORWARD, clockwise);
-            break;
-        case 5:
-            RotateLayer(Direction.BACKWARD, clockwise);
-            break;
+        let clockwise = Math.random() >= 0.5;
+        switch (Math.floor(Math.random() * 6)){
+            case 0:
+                RotateLayer(Direction.UP, clockwise);
+                break;
+            case 1:
+                RotateLayer(Direction.DOWN, clockwise);
+                break;
+            case 2:
+                RotateLayer(Direction.LEFT, clockwise);
+                break;
+            case 3:
+                RotateLayer(Direction.RIGHT, clockwise);
+                break;
+            case 4:
+                RotateLayer(Direction.FORWARD, clockwise);
+                break;
+            case 5:
+                RotateLayer(Direction.BACKWARD, clockwise);
+                break;
+        }
     }
-    }
+}
+
+function RotateLayer(direction, clockwise){
+    // TODO
 }
 
 function InitializePiece(cubeSize, x, y, z){
@@ -70,7 +74,6 @@ function InitializePiece(cubeSize, x, y, z){
 
     if (faces === 0) return false;
 
-    // TODO
     var type = (faces === 1 ? PieceType.CENTER : (faces === 2 ? PieceType.EDGE : PieceType.CORNER));
     const offset = Math.floor(cubeSize / 2);
     return {
@@ -90,9 +93,23 @@ function InitializePiece(cubeSize, x, y, z){
     };
 }
 
-function PiecesFacingUp(pieces, color){
-    if (color === undefined) return pieces.filter(piece => piece.Color.Top !== false);
-    return pieces.filter(piece => (piece.Color.Top === color));
+function GetLayerPieces(cube, direction, layer){
+    var offset = Math.floor(cube.size / 2);
+    layer--;
+    switch (direction){
+        case Direction.UP:
+            return cube.pieces.filter(piece => piece.Y === offset - layer);
+        case Direction.DOWN:
+            return cube.pieces.filter(piece => piece.Y === -offset + layer);
+        case Direction.LEFT:
+            return cube.pieces.filter(piece => piece.X === -offset + layer);
+        case Direction.RIGHT:
+            return cube.pieces.filter(piece => piece.X === offset - layer);
+        case Direction.FORWARD:
+            return cube.pieces.filter(piece => piece.Z === -offset + layer);
+        case Direction.BACKWARD:
+            return cube.pieces.filter(piece => piece.Z === offset - layer);
+    }
 }
 
 function Cube(cubeSize){
@@ -111,5 +128,5 @@ function Cube(cubeSize){
     }
 }
 
-var cube = new Cube(Size);
-console.log(PiecesFacingUp(cube.pieces, PieceColor.WHITE));
+var MyRubiksCube = new Cube(Size);
+console.log(GetLayerPieces(MyRubiksCube, Direction.UP, 1));
