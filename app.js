@@ -25,9 +25,7 @@ const PieceColor = {
 }
 
 // cannot be 1
-const cubeSize = 2;
-const offset = Math.floor(cubeSize / 2);
-var pieces = [];
+const Size = 3;
 
 function ScrambleCube(steps){
     for (let i = 0; i < steps; i++){
@@ -55,7 +53,7 @@ function ScrambleCube(steps){
     }
 }
 
-function InitializePiece(index, x, y, z){
+function InitializePiece(cubeSize, x, y, z){
     var faces = 0;
 
     // green side is front 
@@ -69,17 +67,18 @@ function InitializePiece(index, x, y, z){
     [front, back, left, right, top, bottom].forEach(side => {
         if (side) faces++;
     });
-    
+
     if (faces === 0) return false;
 
     // TODO
     var type = (faces === 1 ? PieceType.CENTER : (faces === 2 ? PieceType.EDGE : PieceType.CORNER));
-
-    pieces.push(index, {
+    const offset = Math.floor(cubeSize / 2);
+    return {
         X: x - offset,
         Y: y - offset,
         Z: z - offset,
         Type: type,
+        Faces: faces,
         Color: {
             Front: front,
             Back: back,
@@ -88,24 +87,29 @@ function InitializePiece(index, x, y, z){
             Top: top,
             Bottom: bottom
         }
-    });
-
-    pieces[index].Direction = Direction.BACKWARD;
+    };
 }
 
-function InitializeCube(){
+function PiecesFacingUp(pieces, color){
+    if (color === undefined) return pieces.filter(piece => piece.Color.Top !== false);
+    return pieces.filter(piece => (piece.Color.Top === color));
+}
+
+function Cube(cubeSize){
+    this.size = cubeSize;
+    this.pieces = [];
     var i = 0;
     for (let x = 0; x < cubeSize; x++){
         for (let y = 0; y < cubeSize; y++){
             for (let z = 0; z < cubeSize; z++){
-                if(InitalizePiece(i, x, y, z) != false){
-                    i++;
-                }
+                let piece = InitializePiece(cubeSize, x, y, z);
+                if (!piece) continue;
+                this.pieces.push(piece);
+                i++;
             }
         }
     }
-    console.log(i);
 }
 
-InitilizeCube();
-console.log(pieces);
+var cube = new Cube(Size);
+console.log(PiecesFacingUp(cube.pieces, PieceColor.WHITE));
