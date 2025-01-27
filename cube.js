@@ -86,20 +86,22 @@ export default class Cube {
         var faces = 0;
 
         // green side is front 
-        const front = (z === 0 ? Cube.PieceColorGREEN : false);
-        const back = (z === cubeSize - 1 ? Cube.PieceColorBLUE : false);
-        const left = (x === 0 ? Cube.PieceColorORANGE : false);
-        const right = (x === cubeSize - 1 ? Cube.PieceColorRED : false);
-        const top = (y === cubeSize - 1 ? Cube.PieceColorWHITE : false);
-        const bottom = (y === 0 ? Cube.PieceColorYELLOW : false);
+        const front = (z === 0 ? Cube.PieceColor.GREEN : false);
+        const back = (z === cubeSize - 1 ? Cube.PieceColor.BLUE : false);
+        const left = (x === 0 ? Cube.PieceColor.ORANGE : false);
+        const right = (x === cubeSize - 1 ? Cube.PieceColor.RED : false);
+        const top = (y === cubeSize - 1 ? Cube.PieceColor.WHITE : false);
+        const bottom = (y === 0 ? Cube.PieceColor.YELLOW : false);
         
         [front, back, left, right, top, bottom].forEach(side => {
-            if (side) faces++;
+            if (side != false) faces++;
         });
 
         if (faces === 0) return false;
 
-        var type = (faces === 1 ? PieceType.CENTER : (faces === 2 ? PieceType.EDGE : PieceType.CORNER));
+        var type = (faces === 1 ?  Cube.PieceType.CENTER :
+             (faces === 2 ? Cube.PieceType.EDGE :
+                 Cube.PieceType.CORNER));
         const offset = Math.floor(cubeSize / 2);
         return {
             Index: index,
