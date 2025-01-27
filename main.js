@@ -39,8 +39,8 @@ cube.pieces.forEach(piece => {
         materials[piece.Color.Left],
         materials[piece.Color.Top],
         materials[piece.Color.Bottom],
-        materials[piece.Color.Back],
-        materials[piece.Color.Front]
+        materials[piece.Color.Front],
+        materials[piece.Color.Back]
     ];
 
     const mesh = new THREE.Mesh(geometry, cubeMaterials);

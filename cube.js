@@ -86,8 +86,8 @@ export default class Cube {
         var faces = 0;
 
         // green side is front 
-        const front = (z === 0 ? Cube.PieceColor.GREEN : false);
-        const back = (z === cubeSize - 1 ? Cube.PieceColor.BLUE : false);
+        const front = (z === cubeSize - 1 ? Cube.PieceColor.GREEN : false);
+        const back = (z === 0 ? Cube.PieceColor.BLUE : false);
         const left = (x === 0 ? Cube.PieceColor.ORANGE : false);
         const right = (x === cubeSize - 1 ? Cube.PieceColor.RED : false);
         const top = (y === cubeSize - 1 ? Cube.PieceColor.WHITE : false);
