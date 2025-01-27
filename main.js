@@ -27,13 +27,14 @@ const materials = {
     [Cube.PieceColor.ORANGE]: new THREE.MeshBasicMaterial({ color: 0xffa500 }),
     [Cube.PieceColor.YELLOW]: new THREE.MeshBasicMaterial({ color: 0xffff00 }),
     [Cube.PieceColor.WHITE]: new THREE.MeshBasicMaterial({ color: 0xffffff }),
+    false: new THREE.MeshBasicMaterial({ color: 0x333333 })
 }
 
 var cube = new Cube(3);
 console.log(cube);
 
 cube.pieces.forEach(piece => {
-    const geometry = new THREE.BoxGeometry(0.9, 0.9, 0.9);
+    const geometry = new THREE.BoxGeometry(0.95, 0.95, 0.95);
     const cubeMaterials = [
         materials[piece.Color.Right],
         materials[piece.Color.Left],
